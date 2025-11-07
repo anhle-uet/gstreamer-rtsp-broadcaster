@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  rtsp-server:
+    # Use 'build: .' to build the Dockerfile
+    build:
+      context: ./services/rtsp-server
+    container_name: gstreamer_rtsp_broadcaster
+    ports:
+      # Map host port 8554 to container port 8554
+      - "8554:8554"
+    volumes:
+      # Mount your local video file to the container path /app/video.mp4
+      - "./resources/video.mp4:/app/video.mp4:ro"
+    # This restart the container if it stops, keep the stream available
+    restart: unless-stopped
